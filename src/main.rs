@@ -22,7 +22,10 @@ fn main() {
 fn init_logic(project_name: &str) {
 
     // Create the project folder
-    let create_directory = Command::new("mkdir").arg(project_name).output().expect("Failed to create the directory");
+    let create_directory = Command::new("mkdir")
+        .arg(project_name)
+        .output()
+        .expect("Failed to create the directory");
     println!("{}", String::from_utf8_lossy(&create_directory.stdout));
     if create_directory.status.success() {
         println!("Created project folder");
@@ -31,7 +34,10 @@ fn init_logic(project_name: &str) {
     }
 
     // Create the environment
-    let create_environment = Command::new("virtualenv").arg(format!("{}/env", project_name)).output().expect("Could not create the environment");
+    let create_environment = Command::new("virtualenv")
+        .arg(format!("{}/env", project_name))
+        .output()
+        .expect("Could not create the environment");
     if create_environment.status.success() {
         println!("Created virtual environment!");
     } else {
@@ -43,7 +49,7 @@ fn init_logic(project_name: &str) {
     // Halp me please
 
     // Create  .gitignore
-    let mut file = match File::create(".gitignore") {
+    let mut file = match File::create(format!("{}/.gitignore", project_name)) {
         Ok(f) => f, 
         Err(_) => panic!("Could not create gitignore file")
     };
@@ -51,7 +57,11 @@ fn init_logic(project_name: &str) {
     file.write_all(data.as_bytes()).unwrap();
 
     // run git init
-    let init_git = Command::new("git").arg("init").output().expect("Could not initialize git repository");
+    let init_git = Command::new("git")
+        .arg("init")
+        .arg(format!("{}", project_name))
+        .output()
+        .expect("Could not initialize git repository");
     if init_git.status.success() {
         println!("Created git repository!");
     } else {
@@ -66,17 +76,8 @@ fn init_logic(project_name: &str) {
     let data = "def main():\n\tprint(\"Hello World!\")";
     file.write_all(data.as_bytes()).unwrap();
 
-
     // Create requirements.txt
-    let mut file = match File::create(format!("{}/main.py", project_name)) {
-        Ok(f) => f, 
-        Err(_) => panic!("Could not create main.py file")
-    };
-    let data = "def main():\n\tprint(\"Hello World!\")";
-    file.write_all(data.as_bytes()).unwrap();
-
-    // Create requirements.txt
-    match File::create("requirements.txt") {
+    match File::create("{}/requirements.txt") {
         Ok(f) => {
             println!("Requirements file created");
             f
