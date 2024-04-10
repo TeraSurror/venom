@@ -6,11 +6,13 @@ use crate::utils::file_utils::FileUtils;
 pub fn run_init_command(project_name: &str) {
 
     // Create the project folder
+    println!("[1] Creating project folder");
     if let Err(err) = fs::create_dir(project_name) {
         panic!("Failed to create the directory: {}", err);
     }
 
     // Create the virtual environment
+    println!("[2] Creating project virtual environment");
     let env_dir = format!("{}/env", project_name);
     if let Err(err) = Command::new("virtualenv").arg(env_dir).output() {
         panic!("Could not create the environment: {}", err);
@@ -43,7 +45,7 @@ pub fn run_init_command(project_name: &str) {
     println!("");
     println!("Begin by typing the following commands:");
     println!("cd {}", project_name);
-    println!("source env");
+    println!("source env/bin/activate");
     println!("");
     println!("Happy hacking!");
     println!("");

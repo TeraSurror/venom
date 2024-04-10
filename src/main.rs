@@ -27,12 +27,12 @@ fn main() {
         "install" => {
             // Validate the command
             if args.len() < 3 {
-                panic!("Project name is not mentioned");
+                panic!("lib is not mentioned");
             }
 
             // Get the lib to install
-            let lib_name = &args[2];
-            commands::install::run_install(lib_name);
+            let lib_list = &args[2..];
+            commands::install::run_install(lib_list);
         }
         _ => panic!("Kya likha hai bhai??")
     }
