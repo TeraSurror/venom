@@ -1,5 +1,5 @@
 use core::panic;
-use std::{fs::{self}, process::Command};
+use std::{fs, process::Command};
 
 use crate::utils::file_utils::FileUtils;
 
@@ -16,13 +16,9 @@ pub fn run_init_command(project_name: &str) {
         panic!("Could not create the environment: {}", err);
     } 
 
-    // activate environment
-    // I do not know how to do this
-    // Halp me please
-
     // Create  .gitignore
     let gitignore_dir = format!("{}/.gitignore", project_name);
-    let gitignore_content = "./env";
+    let gitignore_content = "./env\nactivate_venv.sh";
     FileUtils::create_file_with_content(gitignore_dir, gitignore_content);
 
     // Create git repo

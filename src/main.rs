@@ -24,6 +24,16 @@ fn main() {
             let project_name = &args[2];
             commands::init::run_init_command(project_name);
         },
+        "install" => {
+            // Validate the command
+            if args.len() < 3 {
+                panic!("Project name is not mentioned");
+            }
+
+            // Get the lib to install
+            let lib_name = &args[2];
+            commands::install::run_install(lib_name);
+        }
         _ => panic!("Kya likha hai bhai??")
     }
 }
